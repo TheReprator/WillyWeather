@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_home"
+    app:startDestination="@id/navigation_cityList"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/navigation_cityList"
+        android:name="reprator.willyWeather.cityList.ui.CityListFragment"
+        android:label="BookMark Location"
+        tools:layout="@layout/fragment_citylist">
+
+        <action
+            android:id="@+id/nnavigation_home_list_to_navigation_cityDetail"
+            app:destination="@id/navigation_cityDetail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_cityDetail"
+        android:name="reprator.willyWeather.city.ui.CityDetailFragment"
+        android:label="City Detail Fragment"
+        tools:layout="@layout/fragment_city_detail">
+
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="false" />
+
+    </fragment>
+</navigation>

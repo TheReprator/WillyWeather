@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="cityAdapter"
+            type="reprator.willyWeather.cityList.ui.CityListAdapter" />
+
+        <variable
+            name="cityListViewModal"
+            type="reprator.willyWeather.cityList.CityListViewModal" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/cityList_forecast_loaderErrorHandler"
+            clickListener="@{() -> cityListViewModal.retryForeCastWeather()}"
+            exceptionError="@{cityListViewModal.errorMsgForeCast}"
+            isEmpty="@{TextUtils.isEmpty(cityListViewModal.errorMsgForeCast) &amp;&amp; !cityListViewModal.isLoadingForeCast &amp;&amp; cityListViewModal._foreCastWeatherList.empty }"
+            isError="@{TextUtils.isEmpty(cityListViewModal.errorMsgForeCast) ? false : true}"
+            isLoading="@{cityListViewModal.isLoadingForeCast}"
+            layout="@layout/layout_loader_error_empty" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cityList_forecast_rec"
+            recyclerListAdapter="@{cityAdapter}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="isLoading"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="isError"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="isEmpty"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="exceptionError"
+            type="java.lang.String" />
+
+    </data>
+
+    <FrameLayout
+        android:id="@+id/lee_root"
+        isEmpty="@{isEmpty, default = false}"
+        isError="@{isError, default = false}"
+        isLoading="@{isLoading, default = false}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@android:color/white"
+        android:gravity="center">
+
+        <ProgressBar
+            android:id="@+id/lee_progress"
+            goneUnless="@{isLoading, default = false}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true" />
+
+        <TextView
+            android:id="@+id/lee_empty"
+            goneUnless="@{isEmpty, default = false}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/black"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="No data found" />
+
+        <LinearLayout
+            android:id="@+id/lee_error"
+            goneUnless="@{isError, default = false}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{clickListener}"
+                android:padding="22dp"
+                android:text="@string/btn_retry" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{exceptionError, default= @string/error_msg}"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>
