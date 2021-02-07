@@ -104,4 +104,7 @@ dependencies {
     implementation(Libs.AndroidX.Room.runtime)
     implementation(Libs.AndroidX.Room.ktx)
     kapt(Libs.AndroidX.Room.compiler)
+
+    testImplementation(project(AppModules.moduleTest))
+    testImplementation(project(AppModules.moduleAndroid))
 }

@@ -1,0 +1,160 @@
+{
+  "cod": "200",
+  "message": 0,
+  "cnt": 15,
+  "list": [
+    {
+      "dt": 1612818000,
+      "main": {
+        "temp": 286.55,
+        "feels_like": 283.5,
+        "temp_min": 286.55,
+        "temp_max": 286.55,
+        "pressure": 1016,
+        "sea_level": 1016,
+        "grnd_level": 978,
+        "humidity": 44,
+        "temp_kf": 0
+      },
+      "weather": [
+        {
+          "id": 800,
+          "main": "Clear",
+          "description": "clear sky",
+          "icon": "01n"
+        }
+      ],
+      "clouds": {
+        "all": 10
+      },
+      "wind": {
+        "speed": 1.82,
+        "deg": 342
+      },
+      "visibility": 10000,
+      "pop": 0,
+      "sys": {
+        "pod": "n"
+      },
+      "dt_txt": "2021-02-08 21:00:00"
+    },
+    {
+      "dt": 1612828800,
+      "main": {
+        "temp": 285.25,
+        "feels_like": 281.96,
+        "temp_min": 285.25,
+        "temp_max": 285.25,
+        "pressure": 1014,
+        "sea_level": 1014,
+        "grnd_level": 977,
+        "humidity": 45,
+        "temp_kf": 0
+      },
+      "weather": [
+        {
+          "id": 801,
+          "main": "Clouds",
+          "description": "few clouds",
+          "icon": "02n"
+        }
+      ],
+      "clouds": {
+        "all": 11
+      },
+      "wind": {
+        "speed": 1.98,
+        "deg": 318
+      },
+      "visibility": 10000,
+      "pop": 0,
+      "sys": {
+        "pod": "n"
+      },
+      "dt_txt": "2021-02-09 00:00:00"
+    },
+    {
+      "dt": 1612839600,
+      "main": {
+        "temp": 287.34,
+        "feels_like": 284.54,
+        "temp_min": 287.34,
+        "temp_max": 287.34,
+        "pressure": 1015,
+        "sea_level": 1015,
+        "grnd_level": 978,
+        "humidity": 47,
+        "temp_kf": 0
+      },
+      "weather": [
+        {
+          "id": 802,
+          "main": "Clouds",
+          "description": "scattered clouds",
+          "icon": "03d"
+        }
+      ],
+      "clouds": {
+        "all": 41
+      },
+      "wind": {
+        "speed": 1.87,
+        "deg": 328
+      },
+      "visibility": 10000,
+      "pop": 0,
+      "sys": {
+        "pod": "d"
+      },
+      "dt_txt": "2021-02-09 03:00:00"
+    },
+    {
+      "dt": 1612850400,
+      "main": {
+        "temp": 295.46,
+        "feels_like": 291.75,
+        "temp_min": 295.46,
+        "temp_max": 295.46,
+        "pressure": 1014,
+        "sea_level": 1014,
+        "grnd_level": 977,
+        "humidity": 30,
+        "temp_kf": 0
+      },
+      "weather": [
+        {
+          "id": 803,
+          "main": "Clouds",
+          "description": "broken clouds",
+          "icon": "04d"
+        }
+      ],
+      "clouds": {
+        "all": 70
+      },
+      "wind": {
+        "speed": 3.38,
+        "deg": 308
+      },
+      "visibility": 10000,
+      "pop": 0,
+      "sys": {
+        "pod": "d"
+      },
+      "dt_txt": "2021-02-09 06:00:00"
+    }
+  ],
+  "city": {
+    "id": 6992326,
+    "name": "Mohali",
+    "coord": {
+      "lat": 30.7046,
+      "lon": 76.7179
+    },
+    "country": "IN",
+    "population": 123484,
+    "timezone": 19800,
+    "sunrise": 1612662039,
+    "sunset": 1612701235
+  }
+}

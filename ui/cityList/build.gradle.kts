@@ -79,7 +79,6 @@ dependencies {
     implementation(project(AppModules.moduleBase))
     implementation(project(AppModules.moduleBaseAndroid))
     implementation(project(AppModules.moduleNavigation))
-
     implementation(project(AppModules.moduleDatabase))
 
     implementation(Libs.AndroidX.cardView)
@@ -94,4 +93,7 @@ dependencies {
     //Hilt
     implementation(Libs.DaggerHilt.hilt)
     kapt(Libs.DaggerHilt.hiltCompilerAndroid)
+
+    testImplementation(project(AppModules.moduleTest))
+    testImplementation(project(AppModules.moduleAndroid))
 }

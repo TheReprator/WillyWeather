@@ -75,4 +75,7 @@ dependencies {
     //Hilt
     implementation(Libs.DaggerHilt.hilt)
     kapt(Libs.DaggerHilt.hiltCompilerAndroid)
+
+    testImplementation(project(AppModules.moduleTest))
+    testImplementation(project(AppModules.moduleAndroid))
 }

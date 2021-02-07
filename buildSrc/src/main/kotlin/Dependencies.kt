@@ -28,6 +28,8 @@ object AppModules {
     const val moduleDatabase = ":database"
     const val moduleCityList = ":ui:cityList"
     const val moduleCityDetail = ":ui:cityDetail"
+    const val moduleTest = ":test-shared"
+    const val moduleAndroid = ":androidTest-shared"
 }
 
 object Libs {
@@ -38,6 +40,7 @@ object Libs {
         const val androidLibrary = "com.android.library"
         const val javaLibrary = "java-library"
         const val kotlinLibrary = "kotlin"
+        const val kotlinJVM = "jvm"
         const val kotlinAndroid = "android"
         const val kotlinKapt = "kapt"
         const val kaptHilt = "dagger.hilt.android.plugin"
