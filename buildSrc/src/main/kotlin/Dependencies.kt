@@ -205,6 +205,19 @@ object Libs {
     }
 
     object TestDependencies {
+        object Junit5 {
+            private const val version = "5.7.0"
+            const val classPath = "de.mannodermaus.gradle.plugins:android-junit5:1.7.0.0"
+            const val pluginId = "de.mannodermaus.android-junit5"
+
+            // (Required) Writing and executing Unit Tests on the JUnit Platform
+            const val api = "org.junit.jupiter:junit-jupiter-api$version"
+            const val runTime = "org.junit.jupiter:junit-jupiter-engine$version"
+
+            // (Optional) If you need "Parameterized Tests"
+            const val parameterized = "org.junit.jupiter:junit-jupiter-params$version"
+        }
+
         object Mockk {
             private const val version = "1.10.4"
             const val unitTest = "io.mockk:mockk:$version"

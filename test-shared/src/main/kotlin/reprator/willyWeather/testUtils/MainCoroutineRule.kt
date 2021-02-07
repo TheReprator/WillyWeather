@@ -13,7 +13,7 @@ import reprator.willyWeather.base.util.AppCoroutineDispatchers
 
 @ExperimentalCoroutinesApi
 class MainCoroutineRule(
-    val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
+        val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
 ) : TestWatcher(),
     TestCoroutineScope by TestCoroutineScope(dispatcher) {
 

@@ -1,4 +1,4 @@
-package reprator.willyWeather.androidtest.util
+package reprator.willyWeather.androidTest.util
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

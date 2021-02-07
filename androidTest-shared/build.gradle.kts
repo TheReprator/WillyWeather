@@ -9,37 +9,34 @@ android {
 
     defaultConfig {
         minSdkVersion(AndroidSdk.min)
-
-        testInstrumentationRunner = Libs.TestDependencies.testRunner
-
-        consumerProguardFiles(
-                file("proguard-rules.pro")
-        )
-
         resConfigs(AndroidSdk.locales)
+    }
+
+    sourceSets {
+        map { it.java.srcDirs("src/${it.name}/kotlin") }
     }
 }
 
 dependencies {
-    api(Libs.Kotlin.stdlib)
+    implementation(Libs.Kotlin.stdlib)
 
     // Android Testing
-    androidTestApi(Libs.TestDependencies.truth)
-    androidTestApi(Libs.AndroidX.Room.test)
-    androidTestApi(Libs.TestDependencies.extJUnit)
-    testApi(Libs.TestDependencies.Mockk.instrumentedTest)
+    api(Libs.TestDependencies.truth)
+    api(Libs.AndroidX.Room.test)
+    api(Libs.TestDependencies.extJUnit)
+    api(Libs.TestDependencies.Mockk.instrumentedTest)
 
     //Hilt
-    androidTestApi(Libs.DaggerHilt.hiltAndroidTest)
-    kaptAndroidTest(Libs.DaggerHilt.hiltCompilerAndroid)
+    api(Libs.DaggerHilt.hiltAndroidTest)
+    kapt(Libs.DaggerHilt.hiltCompilerAndroid)
 
     //workmanager
-    androidTestApi(Libs.AndroidX.Work.test)
+    api(Libs.AndroidX.Work.test)
 
     // AndroidX test
-    androidTestApi(Libs.TestDependencies.AndroidXTestInstrumented.core)
-    androidTestApi(Libs.TestDependencies.AndroidXTestInstrumented.runner)
+    api(Libs.TestDependencies.AndroidXTestInstrumented.core)
+    api(Libs.TestDependencies.AndroidXTestInstrumented.runner)
 
     // Architecture components testing
-    androidTestApi(Libs.TestDependencies.core)
+    api(Libs.TestDependencies.core)
 }

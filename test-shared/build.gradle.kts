@@ -3,6 +3,11 @@ plugins {
     kotlin(Libs.Plugins.kotlinJVM)
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 dependencies {
     api(Libs.Kotlin.stdlib)
     implementation(project(AppModules.moduleBase))
