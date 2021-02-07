@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="locationModal"
+            type="reprator.willyWeather.city.modals.LocationModal" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cityDetail_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/cityDetail_toolBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:title="Weather Detail" />
+
+
+        <LinearLayout
+            android:id="@+id/weatherData_root"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cityDetail_toolBar">
+
+            <TextView
+                android:id="@+id/weatherData_tv_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_weather(locationModal.weather)}"
+                android:textColor="@android:color/black"
+                tools:text="Clear Sky" />
+
+            <TextView
+                android:id="@+id/weatherData_tv_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_temperature(locationModal.temperature)}"
+                android:textColor="@android:color/black"
+                tools:text="21 F" />
+
+            <TextView
+                android:id="@+id/weatherData_tv_temperature_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_temperature_min(locationModal.minTemperature)}"
+                android:textColor="@android:color/black"
+                tools:text="20 F" />
+
+            <TextView
+                android:id="@+id/weatherData_tv_temperature_max"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_temperature_min(locationModal.maxTemperature)}"
+                android:textColor="@android:color/black"
+                tools:text="58 F" />
+
+            <TextView
+                android:id="@+id/weatherData_tv_pressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_pressure(locationModal.pressure)}"
+                android:textColor="@android:color/black"
+                tools:text="203" />
+
+            <TextView
+                android:id="@+id/weatherData_tv_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_humidity(locationModal.humidity)}"
+                android:textColor="@android:color/black"
+                tools:text="98" />
+
+            <TextView
+                android:id="@+id/weatherData_tv_windSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_wind_speed(locationModal.windSpeed)}"
+                android:textColor="@android:color/black"
+                tools:text="110 KM/H" />
+
+            <TextView
+                android:id="@+id/weatherData_tv_windDegree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_wind_degree(locationModal.windDegree)}"
+                android:textColor="@android:color/black"
+                tools:text="98" />
+
+            <TextView
+                android:id="@+id/weatherData_tv_sunrise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_sunrise(locationModal.sunrise)}"
+                android:textColor="@android:color/black"
+                tools:text="6:o00 AM" />
+
+            <TextView
+                android:id="@+id/weatherData_tv_sunset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_sunset(locationModal.sunset)}"
+                android:textColor="@android:color/black"
+                tools:text="6:o00 PM" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

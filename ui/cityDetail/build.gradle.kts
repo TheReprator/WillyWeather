@@ -6,18 +6,6 @@ plugins {
     id(Libs.Plugins.kotlinNavigation)
 }
 
-kapt {
-    useBuildCache = true
-    correctErrorTypes = true
-
-    arguments {
-        hashMapOf(
-        "dagger.fastInit" to "enabled",
-        "dagger.validateTransitiveComponentDependencies" to "DISABLED"
-        )
-    }
-}
-
 android {
     compileSdkVersion(AndroidSdk.compile)
 
@@ -25,7 +13,7 @@ android {
         minSdkVersion(AndroidSdk.min)
 
         consumerProguardFiles(
-                file("proguard-rules.pro")
+            file("proguard-rules.pro")
         )
 
         resConfigs(AndroidSdk.locales)
@@ -33,11 +21,6 @@ android {
 
     buildFeatures.dataBinding = true
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    
     sourceSets {
         map { it.java.srcDirs("src/${it.name}/kotlin") }
     }
@@ -52,26 +35,24 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             proguardFiles(
-                    getDefaultProguardFile("proguard-android.txt"),
-                    file("proguard-rules.pro")
+                getDefaultProguardFile("proguard-android.txt"),
+                file("proguard-rules.pro")
             )
         }
     }
 
     packagingOptions {
-        exclude("META-INF/atomicfu.kotlin_module")
-        pickFirst("META-INF/*")
+        exclude ("META-INF/atomicfu.kotlin_module")
+        pickFirst ("META-INF/*")
     }
 
     kotlinOptions {
+        // work-runtime-ktx 2.1.0 and above now requires Java 8
         jvmTarget = JavaVersion.VERSION_1_8.toString()
 
+        // Enable Coroutines and Flow APIs
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlinx.coroutines.FlowPreview"
-    }
-
-    kapt {
-        correctErrorTypes = true
     }
 }
 
