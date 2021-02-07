@@ -9,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import reprator.willyWeather.base.extensions.computationalBlock
 import reprator.willyWeather.base.extensions.mainBlock
@@ -39,11 +38,13 @@ class CityListViewModal @Inject constructor(
     private val errorHandler = CoroutineExceptionHandler { _, error ->
         mainBlock {
             _errorMsgForeCast.value = error.localizedMessage
+            _isLoadingForeCast.value = false
         }
     }
 
     fun getForeCastWeatherUse() {
-        viewModelScope.launch(errorHandler) {
+
+        computationalBlock(errorHandler) {
             forecastWeatherUseCase(createRequestModal()).flowOn(coroutineDispatcherProvider.io)
                     .catch { e ->
                         _errorMsgForeCast.value = e.localizedMessage
