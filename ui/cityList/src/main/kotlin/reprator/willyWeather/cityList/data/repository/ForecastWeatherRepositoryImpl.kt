@@ -16,7 +16,6 @@ import reprator.willyWeather.cityList.domain.repository.ForecastWeatherRepositor
 import reprator.willyWeather.cityList.modals.LocationModal
 import reprator.willyWeather.cityList.modals.LocationRequestModal
 import javax.inject.Inject
-import kotlin.coroutines.resumeWithException
 
 @ViewModelScoped
 class ForecastWeatherRepositoryImpl @Inject constructor(
@@ -31,20 +30,8 @@ class ForecastWeatherRepositoryImpl @Inject constructor(
             Flow<WillyWeatherResult<List<LocationModal>>> {
         return if (connectionDetector.isInternetAvailable)
             saveAndFetchFromDb(requestModal)
-        else {
-            when (val data = getDataFromDb()) {
-                is Success -> {
-                    if (data.data.isNullOrEmpty())
-                        flowOf(ErrorResult(message = "No internet connection."))
-                    else
-                        flowOf(Success(data.data))
-                }
-                is ErrorResult -> {
-                    flowOf(ErrorResult(message = data.message, throwable = data.throwable))
-                }
-                else -> throw IllegalStateException()
-            }
-        }
+        else
+            getDataFromDb()
     }
 
     private suspend fun saveAndFetchFromDb(requestModal: LocationRequestModal) =
@@ -53,19 +40,33 @@ class ForecastWeatherRepositoryImpl @Inject constructor(
                     forecastWeatherRemoteDataSource.getForecastWeather(requestModal)
                             .also { flowResult ->
                                 flowResult.catch { error ->
-                                    error.printStackTrace()
-                                    cont.resumeWithException(error)
+                                    // error.printStackTrace()
+                                    // cont.resumeWithException(error)
+                                    cont.resume(getDataFromDb()) { error }
                                 }.collect {
                                     if (it is Success && it.data.isNotEmpty()) {
                                         forecastWeatherLocalDataSource.clearAllRecords()
                                         forecastWeatherLocalDataSource.insertAllRecords(it.data)
 
-                                        cont.resume(flowOf(getDataFromDb())) {}
+                                        cont.resume(getDataFromDb()) {}
                                     }
                                 }
                             }
                 }
             }
 
-    private suspend fun getDataFromDb() = forecastWeatherLocalDataSource.getLocationList().single()
+    private suspend fun getDataFromDb(): Flow<WillyWeatherResult<List<LocationModal>>> {
+        return when (val data = forecastWeatherLocalDataSource.getLocationList().single()) {
+            is Success -> {
+                if (data.data.isNullOrEmpty())
+                    flowOf(ErrorResult(message = "No internet connection."))
+                else
+                    flowOf(Success(data.data))
+            }
+            is ErrorResult -> {
+                flowOf(ErrorResult(message = data.message, throwable = data.throwable))
+            }
+            else -> throw IllegalStateException()
+        }
+    }
 }

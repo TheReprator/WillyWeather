@@ -37,6 +37,7 @@ class CityListViewModal @Inject constructor(
 
     private val errorHandler = CoroutineExceptionHandler { _, error ->
         mainBlock {
+            error.printStackTrace()
             _errorMsgForeCast.value = error.localizedMessage
             _isLoadingForeCast.value = false
         }
@@ -47,6 +48,7 @@ class CityListViewModal @Inject constructor(
         computationalBlock(errorHandler) {
             forecastWeatherUseCase(createRequestModal()).flowOn(coroutineDispatcherProvider.io)
                     .catch { e ->
+                        e.printStackTrace()
                         _errorMsgForeCast.value = e.localizedMessage
                     }.onStart {
                         _isLoadingForeCast.value = true
