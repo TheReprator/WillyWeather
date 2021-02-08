@@ -174,7 +174,7 @@ object Libs {
     }
 
     object OkHttp {
-        private const val version = "4.10.0-RC1"
+        private const val version = "5.0.0-alpha.2"
         const val okhttp = "com.squareup.okhttp3:okhttp:$version"
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
         const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$version"
@@ -206,7 +206,7 @@ object Libs {
 
     object TestDependencies {
         object Junit5 {
-            private const val version = "5.7.0"
+            private const val version = "5.7.1"
             const val classPath = "de.mannodermaus.gradle.plugins:android-junit5:1.7.0.0"
             const val pluginId = "de.mannodermaus.android-junit5"
 

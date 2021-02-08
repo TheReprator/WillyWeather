@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface WeatherApiService {
 
     companion object {
-        private const val CURRENCY_API_KEY = "fae7190d7e6433ec3a45285ffcf55c86"
+        const val CURRENCY_API_KEY = "fae7190d7e6433ec3a45285ffcf55c86"
     }
 
     @GET("forecast")
