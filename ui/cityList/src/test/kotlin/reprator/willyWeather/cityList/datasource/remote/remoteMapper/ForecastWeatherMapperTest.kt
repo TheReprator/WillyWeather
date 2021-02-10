@@ -23,6 +23,8 @@ class ForecastWeatherMapperTest {
     @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
 
+    val dateUtils: DateUtilsImpl = DateUtilsImpl()
+
     @Before
     fun setUp() = MockKAnnotations.init(this)
 
@@ -31,11 +33,11 @@ class ForecastWeatherMapperTest {
         val input = getFakeRemoteDataList()
         val output = getFakeLocationModalDataList()
 
-        mockkConstructor(ForecastWeatherMapper::class)
-        val mapper = spyk<ForecastWeatherMapper>()
-        val finalResult = mapper.map(input)
+        val mapper = spyk(ForecastWeatherMapper(dateUtils))
 
-        Truth.assertThat(output).isEqualTo(finalResult)
+        val result = mapper.map(input)
+
+        Truth.assertThat(output).isEqualTo(result)
 
         coVerify(atMost = 1) { mapper.map(input) }
 

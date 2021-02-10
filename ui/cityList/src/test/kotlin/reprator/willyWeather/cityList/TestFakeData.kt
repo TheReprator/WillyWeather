@@ -55,13 +55,13 @@ object TestFakeData {
             ),
 
             LocationModal(
-                "London, UK", dateNextDay, epoch, "10:01 PM", "10:01 PM", "-1.8",
+                "London, UK", dateNextDay, epoch, "12:00 PM", "12:00 PM","-1.8",
                 "0.56", "89.01", "23.0", "Light Snow", "5.24",
                 "78.0", "0.85", "91.0"
             ),
 
             LocationModal(
-                "London, UK", dateDayAfterTomorrow, epoch, "10:01 PM", "10:01 PM", "-1.8",
+                "London, UK", dateDayAfterTomorrow, epoch, "12:00 PM", "12:00 PM","-1.8",
                 "0.56", "89.01", "23.0", "Light Snow", "5.24",
                 "78.0", "0.85", "91.0"
             ),
@@ -210,7 +210,7 @@ object TestFakeData {
                             "Light Snow", "13d"
                         )
                     ), 5.24, 78.toDouble(), 91.toDouble(), 0.69, 0.85
-                )/*,
+                ),
                 ListRemoteEntity(
                     dateNextDayRaw, dateNextDayRaw, dateNextDayRaw, TempRemoteEntity(
                         0.24, -1.8, 0.56, -1.28, -0.93, -1.69
@@ -243,7 +243,7 @@ object TestFakeData {
                     91.toDouble(),
                     0.69,
                     0.85
-                )*/
+                )
             ), cityEntity
         )
     }
