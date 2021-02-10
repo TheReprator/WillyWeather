@@ -36,20 +36,20 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/weatherData_tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_date(locationModal.weatherDate)}"
+                android:textColor="@android:color/black"
+                tools:text="Clear Sky" />
+
+            <TextView
                 android:id="@+id/weatherData_tv_weather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{@string/info_weather(locationModal.weather)}"
                 android:textColor="@android:color/black"
                 tools:text="Clear Sky" />
-
-            <TextView
-                android:id="@+id/weatherData_tv_temperature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:text="@{@string/info_temperature(locationModal.temperature)}"
-                tools:text="21 F" />
 
             <TextView
                 android:id="@+id/weatherData_tv_temperature_min"
@@ -112,6 +112,22 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:text="@{@string/info_sunset(locationModal.sunset)}"
+                tools:text="6:o00 PM" />
+
+            <TextView
+                android:id="@+id/weatherData_tv_snowVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_snowVolume(locationModal.snowVolume)}"
+                android:textColor="@android:color/black"
+                tools:text="6:o00 AM" />
+
+            <TextView
+                android:id="@+id/weatherData_tv_cloudiness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/info_cloudiness(locationModal.cloudiness)}"
+                android:textColor="@android:color/black"
                 tools:text="6:o00 PM" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

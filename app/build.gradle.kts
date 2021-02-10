@@ -106,5 +106,7 @@ dependencies {
     kapt(Libs.AndroidX.Room.compiler)
 
     testImplementation(project(AppModules.moduleTest))
-    testImplementation(project(AppModules.moduleAndroid))
+
+    androidTestImplementation(project(AppModules.moduleTest))
+    androidTestImplementation(project(AppModules.moduleAndroid))
 }

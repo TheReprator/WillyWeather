@@ -26,6 +26,11 @@
 
         <argument
             android:name="id"
+            app:argType="long"
+            app:nullable="false" />
+
+        <argument
+            android:name="locationName"
             app:argType="string"
             app:nullable="false" />
 

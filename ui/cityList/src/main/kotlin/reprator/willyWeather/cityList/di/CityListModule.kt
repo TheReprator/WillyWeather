@@ -7,6 +7,7 @@ import dagger.hilt.android.components.ViewModelComponent
 import kotlinx.coroutines.CoroutineScope
 import reprator.willyWeather.base.util.AppCoroutineDispatchers
 import reprator.willyWeather.base.util.ConnectionDetector
+import reprator.willyWeather.base.util.DateUtils
 import reprator.willyWeather.cityList.data.datasource.ForecastWeatherLocalDataSource
 import reprator.willyWeather.cityList.data.datasource.ForecastWeatherRemoteDataSource
 import reprator.willyWeather.cityList.data.repository.ForecastWeatherRepositoryImpl
@@ -18,8 +19,6 @@ import reprator.willyWeather.cityList.datasource.remote.remoteMapper.ForecastWea
 import reprator.willyWeather.cityList.domain.repository.ForecastWeatherRepository
 import reprator.willyWeather.cityList.domain.usecase.ForecastWeatherUseCase
 import reprator.willyWeather.database.DBManager
-import reprator.willyWeather.navigation.AppNavigator
-import reprator.willyWeather.navigation.CityListNavigator
 import retrofit2.Retrofit
 
 @InstallIn(ViewModelComponent::class)
@@ -27,56 +26,63 @@ import retrofit2.Retrofit
 class CityListModule {
 
     @Provides
+    fun provideForecastWeatherMapper(
+        dateUtils: DateUtils
+    ): ForecastWeatherMapper {
+        return ForecastWeatherMapper(dateUtils)
+    }
+
+    @Provides
     fun provideForecastWeatherRemoteDataSource(
-            weatherApiService: WeatherApiService,
-            forecastWeatherMapper: ForecastWeatherMapper
+        weatherApiService: WeatherApiService,
+        forecastWeatherMapper: ForecastWeatherMapper
     ): ForecastWeatherRemoteDataSource {
         return ForeCastWeatherRemoteDataSourceImpl(
-                weatherApiService,
-                forecastWeatherMapper
+            weatherApiService,
+            forecastWeatherMapper
         )
     }
 
     @Provides
     fun provideForecastWeatherRepository(
-            forecastWeatherRemoteDataSource: ForecastWeatherRemoteDataSource,
-            forecastWeatherLocalDataSource: ForecastWeatherLocalDataSource,
-            coroutineScope: CoroutineScope,
-            coroutineDispatchers: AppCoroutineDispatchers,
-            connectionDetector: ConnectionDetector
+        forecastWeatherRemoteDataSource: ForecastWeatherRemoteDataSource,
+        forecastWeatherLocalDataSource: ForecastWeatherLocalDataSource,
+        coroutineScope: CoroutineScope,
+        coroutineDispatchers: AppCoroutineDispatchers,
+        connectionDetector: ConnectionDetector
     ): ForecastWeatherRepository {
         return ForecastWeatherRepositoryImpl(
-                forecastWeatherRemoteDataSource,
-                forecastWeatherLocalDataSource,
-                coroutineScope,
-                coroutineDispatchers,
-                connectionDetector
+            forecastWeatherRemoteDataSource,
+            forecastWeatherLocalDataSource,
+            coroutineScope,
+            coroutineDispatchers,
+            connectionDetector
         )
     }
 
     @Provides
     fun provideForecastWeatherLocalDataSource(
-            dbManager: DBManager,
-            getWeatherListMapper: GetWeatherListMapper
+        dbManager: DBManager,
+        getWeatherListMapper: GetWeatherListMapper
     ): ForecastWeatherLocalDataSource {
         return ForeCastWeatherLocalDataSourceImpl(
-                dbManager,
-                getWeatherListMapper
+            dbManager,
+            getWeatherListMapper
         )
     }
 
     @Provides
     fun provideForecastWeatherUseCase(
-            forecastWeatherRepository: ForecastWeatherRepository
+        forecastWeatherRepository: ForecastWeatherRepository
     ): ForecastWeatherUseCase {
         return ForecastWeatherUseCase(forecastWeatherRepository)
     }
 
     @Provides
     fun provideWeatherApiService(
-            retrofit: Retrofit
+        retrofit: Retrofit
     ): WeatherApiService {
         return retrofit
-                .create(WeatherApiService::class.java)
+            .create(WeatherApiService::class.java)
     }
 }

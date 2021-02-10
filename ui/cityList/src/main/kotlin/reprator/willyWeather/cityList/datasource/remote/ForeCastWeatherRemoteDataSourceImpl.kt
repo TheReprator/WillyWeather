@@ -21,7 +21,7 @@ class ForeCastWeatherRemoteDataSourceImpl @Inject constructor(
     private suspend fun getForecastWeatherApi(requestModal: LocationRequestModal): Flow<WillyWeatherResult<List<LocationModal>>> {
         return flow {
             weatherApiService.foreCastWeather(
-                requestModal.latitude.toDouble(), requestModal.longitude.toDouble(),
+                requestModal.location,
                 requestModal.unit, cnt = requestModal.count
             ).toResult {
                 emit(Success(forecastWeatherMapper.map(it)))

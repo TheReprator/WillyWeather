@@ -8,14 +8,15 @@ import reprator.willyWeather.base.useCases.Success
 import reprator.willyWeather.base.useCases.WillyWeatherResult
 import reprator.willyWeather.city.modals.LocationModal
 import reprator.willyWeather.database.DBManager
+import java.util.*
 import javax.inject.Inject
 
 class ForecastWeatherUseCase @Inject constructor(
     private val dbManager: DBManager,
     private val getWeatherDetailMapper: GetWeatherDetailMapper
 ) {
-    suspend operator fun invoke(id: String): Flow<WillyWeatherResult<LocationModal>> {
-        return when (val data = dbManager.getLocation(id.toInt()).single()) {
+    suspend operator fun invoke(id: Long): Flow<WillyWeatherResult<LocationModal>> {
+        return when (val data = dbManager.getWeatherItem(Date(id)).single()) {
             is Success -> {
                 flowOf(Success(getWeatherDetailMapper.map(data.data)))
             }

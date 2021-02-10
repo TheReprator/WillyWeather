@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="info_weather">Weather %s</string>
-    <string name="info_temperature">Temperature %s</string>
-    <string name="info_temperature_min">Temperature Min. %s</string>
-    <string name="info_temperature_max">Temperature Max. %s</string>
-    <string name="info_pressure">Pressure %s</string>
-    <string name="info_humidity">Humidity %s</string>
-    <string name="info_wind_speed">Wind Speed %s</string>
-    <string name="info_wind_degree">Wind Degree %s</string>
-    <string name="info_sunrise">Sunrise %s</string>
-    <string name="info_sunset">Sunset %s</string>
-
+    <string name="info_date">Date: %s</string>
+    <string name="info_weather">Weather: %s</string>
+    <string name="info_temperature_min">Temperature Min.: %s</string>
+    <string name="info_temperature_max">Temperature Max.: %s</string>
+    <string name="info_pressure">Pressure: %s</string>
+    <string name="info_humidity">Humidity: %s</string>
+    <string name="info_wind_speed">Wind Speed: %s</string>
+    <string name="info_wind_degree">Wind Degree: %s</string>
+    <string name="info_sunrise">Sunrise: %s</string>
+    <string name="info_sunset">Sunset: %s</string>
+    <string name="info_snowVolume">Snow Volume: %s</string>
+    <string name="info_cloudiness">Cloudiness: %s</string>
 </resources>

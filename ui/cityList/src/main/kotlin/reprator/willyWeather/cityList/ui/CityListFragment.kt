@@ -72,7 +72,8 @@ class CityListFragment : Fragment(R.layout.fragment_citylist), CityItemClickList
     }
 
     override fun itemClicked(locationModal: LocationModal) {
-        cityListNavigator.navigateToCityDetailScreen(findNavController(), locationModal.id.toString())
+        cityListNavigator.navigateToCityDetailScreen(findNavController(),
+            locationModal.weatherDate.time, locationModal.placeName)
     }
 
 }

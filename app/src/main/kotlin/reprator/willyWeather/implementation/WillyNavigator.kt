@@ -1,4 +1,4 @@
-package reprator.willyWeather
+package reprator.willyWeather.implementation
 
 import androidx.navigation.NavController
 import reprator.willyWeather.cityList.ui.CityListFragmentDirections
@@ -7,9 +7,13 @@ import javax.inject.Inject
 
 class WillyNavigator @Inject constructor(): AppNavigator {
 
-    override fun navigateToCityDetailScreen(navController: NavController, id: String) {
+    override fun navigateToCityDetailScreen(
+        navController: NavController,
+        id: Long,
+        placeName: String
+    ) {
         val direction =
-                CityListFragmentDirections.nnavigationHomeListToNavigationCityDetail(id)
+            CityListFragmentDirections.nnavigationHomeListToNavigationCityDetail(id, placeName)
         navController.navigate(direction)
     }
 

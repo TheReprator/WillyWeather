@@ -15,7 +15,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import reprator.willyWeather.base.util.bodyOrThrow
 import reprator.willyWeather.cityList.datasource.remote.WeatherApiService
-import reprator.willyWeather.cityList.datasource.remote.WeatherApiService.Companion.CURRENCY_API_KEY
+import reprator.willyWeather.cityList.datasource.remote.WeatherApiService.Companion.WEATHER_API_KEY
 import reprator.willyWeather.cityList.datasource.remote.api.setup.createJacksonConverterFactory
 import reprator.willyWeather.cityList.datasource.remote.api.setup.enqueueResponse
 import retrofit2.Retrofit
@@ -27,8 +27,7 @@ import java.util.concurrent.TimeUnit
 class ForeCastWeatherApiTest {
 
     companion object {
-        private const val LAT = 30.7046
-        private const val LONG = 76.7179
+        private const val LOCATION_NAME = "london"
         private const val UNIT = "standard"
         private const val COUNT = 2
     }
@@ -67,7 +66,7 @@ class ForeCastWeatherApiTest {
     @Test
     fun `get weather forecast for next 2 days`() = runBlocking {
         javaClass.enqueueResponse(mockWebServer, "forecast.json")
-        val foreCastEntity = service.foreCastWeather(LAT, LONG, UNIT, cnt = COUNT).body()
+        val foreCastEntity = service.foreCastWeather(LOCATION_NAME, UNIT, cnt = COUNT).body()
         val request = mockWebServer.takeRequest()
 
         Truth.assertThat(foreCastEntity).isNotNull()
@@ -86,7 +85,7 @@ class ForeCastWeatherApiTest {
         Truth.assertThat(queryParams).isEqualTo(requestParams)
 
         Truth.assertThat(request.path)
-            .isEqualTo("/forecast?lat=$LAT&lon=$LONG&units=$UNIT&appid=$CURRENCY_API_KEY&cnt=$COUNT")
+            .isEqualTo("/forecast/daily?q=$LOCATION_NAME&units=$UNIT&appid=$WEATHER_API_KEY&cnt=$COUNT")
         Truth.assertThat(request.method).isEqualTo("GET")
     }
 
@@ -98,6 +97,6 @@ class ForeCastWeatherApiTest {
 
         mockWebServer.enqueue(response)
 
-        val execute = service.foreCastWeather(LAT, LONG, UNIT, cnt = COUNT).bodyOrThrow()
+        val execute = service.foreCastWeather(LOCATION_NAME, UNIT, cnt = COUNT).bodyOrThrow()
     }
 }

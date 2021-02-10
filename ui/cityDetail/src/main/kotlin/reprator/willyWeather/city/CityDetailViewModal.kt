@@ -35,7 +35,7 @@ class CityDetailViewModal @Inject constructor(
 
     fun getTodayWeatherUseCase() {
         computationalBlock {
-            forecastWeatherUseCase(savedStateHandle.get<String>(LOCATION_ID)!!)
+            forecastWeatherUseCase(savedStateHandle.get<Long>(LOCATION_ID)!!)
                 .flowOn(coroutineDispatcherProvider.io).catch { e ->
                     Timber.e("error is ${e.localizedMessage}")
                 }.flowOn(coroutineDispatcherProvider.main)

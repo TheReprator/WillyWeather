@@ -78,7 +78,7 @@ class CityListViewModal @Inject constructor(
 
     private fun createRequestModal(): LocationRequestModal {
         //val latLng = savedStateHandle.get<String>("latLng")!!.split(",")
-        return LocationRequestModal("30.7046", "76.7179")
+        return LocationRequestModal("london")
     }
 
     private fun computationalBlock(

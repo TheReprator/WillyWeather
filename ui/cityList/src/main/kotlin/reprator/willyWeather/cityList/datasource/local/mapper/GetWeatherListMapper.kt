@@ -2,46 +2,61 @@ package reprator.willyWeather.cityList.datasource.local.mapper
 
 import reprator.willyWeather.base.util.MapperConversion
 import reprator.willyWeather.cityList.modals.LocationModal
-import reprator.willyWeather.database.LocationEntity
+import reprator.willyWeather.database.WeatherEntity
 import javax.inject.Inject
 
 class GetWeatherListMapper @Inject constructor() :
-        MapperConversion<LocationEntity, LocationModal> {
+    MapperConversion<WeatherEntity, LocationModal> {
 
-    override suspend fun mapTo(from: LocationEntity): LocationModal {
+    override suspend fun mapTo(from: WeatherEntity): LocationModal {
         return LocationModal(
-                from.weather,
-                from.temperature,
-                from.minTemperature,
-                from.maxTemperature,
+            from.placeName,
 
-                from.pressure,
-                from.humidity,
+            from.weatherDate,
+            from.timeZone,
 
-                from.windSpeed,
-                from.windDegree,
+            from.sunset,
+            from.sunrise,
 
-                from.sunrise,
-                from.sunset,
-                from.locationId
+            from.minTemperature,
+            from.maxTemperature,
+
+            from.humidity,
+            from.pressure,
+
+            from.weather,
+
+            from.windSpeed,
+            from.windDegree,
+
+            from.snowVolume,
+            from.cloudiness
         )
     }
 
-    override suspend fun mapIn(from: LocationModal): LocationEntity {
-        return LocationEntity(
-                from.weather,
-                from.temperature,
-                from.minTemperature,
-                from.maxTemperature,
+    override suspend fun mapIn(from: LocationModal): WeatherEntity {
+        return WeatherEntity(
+            from.placeName,
 
-                from.pressure,
-                from.humidity,
+            from.weatherDate,
+            from.timeZone,
 
-                from.windSpeed,
-                from.windDegree,
+            from.sunset,
+            from.sunrise,
 
-                from.sunrise,
-                from.sunset
+            from.minTemperature,
+            from.maxTemperature,
+
+            from.humidity,
+            from.pressure,
+
+            from.weather,
+
+            from.windSpeed,
+            from.windDegree,
+
+            from.snowVolume,
+            from.cloudiness
         )
     }
 }

@@ -18,4 +18,6 @@ dependencies {
     api(Libs.AndroidX.Room.common)
 
     api(Libs.Dagger.javaxInject)
+
+    testImplementation(project(AppModules.moduleTest))
 }

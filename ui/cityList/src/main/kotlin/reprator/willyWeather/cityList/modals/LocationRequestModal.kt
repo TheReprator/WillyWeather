@@ -1,9 +1,8 @@
 package reprator.willyWeather.cityList.modals
 
 class LocationRequestModal(
-    val latitude: String,
-    val longitude: String,
+    val location: String,
     val unit: String = "standard",
-    val count: Int = 15
+    val count: Int = 16
 
 )

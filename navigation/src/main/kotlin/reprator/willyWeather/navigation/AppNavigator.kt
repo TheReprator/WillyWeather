@@ -5,7 +5,8 @@ import androidx.navigation.NavController
 interface AppNavigator: CityListNavigator, CityDetailNavigator
 
 interface CityListNavigator {
-    fun navigateToCityDetailScreen(navController: NavController, id: String)
+    fun navigateToCityDetailScreen(navController: NavController, id: Long,
+    placeName: String)
 }
 
 interface CityDetailNavigator: BackNavigator

@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
-import reprator.willyWeather.WillyNavigator
+import reprator.willyWeather.implementation.WillyNavigator
 import reprator.willyWeather.navigation.AppNavigator
 
 @InstallIn(ActivityComponent::class)

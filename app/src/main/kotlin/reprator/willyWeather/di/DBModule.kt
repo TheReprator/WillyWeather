@@ -9,10 +9,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import reprator.willyWeather.WillyWeatherRoomDb
+import reprator.willyWeather.implementation.WillyWeatherRoomDb
+import reprator.willyWeather.base.util.DateUtils
 import reprator.willyWeather.database.DBManager
 import reprator.willyWeather.database.DBManagerImpl
-import reprator.willyWeather.database.LocationDao
+import reprator.willyWeather.database.WeatherDao
 import timber.log.Timber
 
 @InstallIn(SingletonComponent::class)
@@ -37,11 +38,11 @@ class DBModule {
     }
 
     @Provides
-    fun providesCategoryDAO(willyWeatherRoomDb: WillyWeatherRoomDb): LocationDao =
-            willyWeatherRoomDb.locationDao()
+    fun providesCategoryDAO(willyWeatherRoomDb: WillyWeatherRoomDb): WeatherDao =
+            willyWeatherRoomDb.weatherDao()
 
     @Provides
-    fun providesDBManager(locationDao: LocationDao): DBManager =
-            DBManagerImpl(locationDao)
+    fun providesDBManager(weatherDao: WeatherDao, dateUtils: DateUtils): DBManager =
+            DBManagerImpl(weatherDao, dateUtils)
 
 }

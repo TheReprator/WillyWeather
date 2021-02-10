@@ -13,10 +13,11 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher
+import reprator.willyWeather.implementation.DateUtilsImpl
 import reprator.willyWeather.R
 import reprator.willyWeather.base.util.AppCoroutineDispatchers
 import reprator.willyWeather.base.util.ConnectionDetector
-import reprator.willyWeather.navigation.AppNavigator
+import reprator.willyWeather.base.util.DateUtils
 import reprator.willyWeather.util.AppCoroutineDispatchersImpl
 import reprator.willyWeather.util.connectivity.InternetChecker
 import java.util.concurrent.Executors
@@ -58,5 +59,12 @@ class AppModule {
             @ApplicationContext context: Context, lifecycle: Lifecycle
     ): ConnectionDetector {
         return InternetChecker(context, lifecycle)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDateUtils(
+    ): DateUtils {
+        return DateUtilsImpl()
     }
 }

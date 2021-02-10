@@ -5,70 +5,73 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import reprator.willyWeather.base.useCases.Success
 import reprator.willyWeather.base.useCases.WillyWeatherResult
+import reprator.willyWeather.base.util.DateUtils
 import reprator.willyWeather.base.util.safeApiCall
+import java.util.*
 import javax.inject.Inject
 
 interface DBManager {
-
-    suspend fun saveLocation(locationEntity: LocationEntity): Flow<WillyWeatherResult<Long>>
-    suspend fun saveLocationList(locationEntity: List<LocationEntity>): Flow<WillyWeatherResult<List<Long>>>
-    suspend fun getLocationList(): Flow<WillyWeatherResult<List<LocationEntity>>>
-    suspend fun getLocation(id: Int): Flow<WillyWeatherResult<LocationEntity>>
-    suspend fun deleteLocation(locationEntity: LocationEntity): Flow<WillyWeatherResult<Int>>
+    suspend fun saveWeather(weatherEntity: WeatherEntity): Flow<WillyWeatherResult<Long>>
+    suspend fun saveWeatherList(weatherEntity: List<WeatherEntity>): Flow<WillyWeatherResult<List<Long>>>
+    suspend fun getWeatherList(): Flow<WillyWeatherResult<List<WeatherEntity>>>
+    suspend fun getWeatherItem(date: Date): Flow<WillyWeatherResult<WeatherEntity>>
+    suspend fun deleteWeather(weatherEntity: WeatherEntity): Flow<WillyWeatherResult<Int>>
     suspend fun clearTable(): Flow<WillyWeatherResult<Int>>
 }
 
-class DBManagerImpl @Inject constructor(private val locationDao: LocationDao) : DBManager {
+class DBManagerImpl @Inject constructor(private val weatherDao: WeatherDao,
+                                        private val dateUtils: DateUtils) : DBManager {
 
-    private suspend fun saveLocationDB(locationEntity: LocationEntity): Flow<WillyWeatherResult<Long>> {
-        val data = locationDao.insertLocation(locationEntity)
+    private suspend fun saveWeatherDB(weatherEntity: WeatherEntity): Flow<WillyWeatherResult<Long>> {
+        val data = weatherDao.insertWeather(weatherEntity)
         return flowOf(Success(data))
     }
 
-    override suspend fun saveLocation(locationEntity: LocationEntity): Flow<WillyWeatherResult<Long>> =
-        safeApiCall(call = { saveLocationDB(locationEntity) })
+    override suspend fun saveWeather(weatherEntity: WeatherEntity): Flow<WillyWeatherResult<Long>> =
+            safeApiCall(call = { saveWeatherDB(weatherEntity) })
 
-    private suspend fun saveLocationListDB(locationEntity: List<LocationEntity>): Flow<WillyWeatherResult<List<Long>>> {
-        val data = locationDao.insertLocationList(*locationEntity.toTypedArray())
+    private suspend fun saveWeatherListDB(weatherEntity: List<WeatherEntity>): Flow<WillyWeatherResult<List<Long>>> {
+        val data = weatherDao.insertWeatherList(*weatherEntity.toTypedArray())
         return flowOf(Success(data))
     }
 
-    override suspend fun saveLocationList(locationEntity: List<LocationEntity>): Flow<WillyWeatherResult<List<Long>>> =
-        safeApiCall(call = { saveLocationListDB(locationEntity) })
+    override suspend fun saveWeatherList(weatherEntity: List<WeatherEntity>):
+            Flow<WillyWeatherResult<List<Long>>> =
+            safeApiCall(call = { saveWeatherListDB(weatherEntity) })
 
-    private suspend fun getLocationListDB(): Flow<WillyWeatherResult<List<LocationEntity>>> {
+    private suspend fun getWeatherListDB(date: Date): Flow<WillyWeatherResult<List<WeatherEntity>>> {
         return flow {
-            val data = locationDao.getLocationList()
+            val data = weatherDao.getWeatherList(date)
             if (data.isNullOrEmpty())
-                emit(Success(emptyList<LocationEntity>()))
+                emit(Success(emptyList<WeatherEntity>()))
             else
                 emit(Success(data))
         }
     }
 
-    override suspend fun getLocationList(): Flow<WillyWeatherResult<List<LocationEntity>>> =
-        safeApiCall(call = { getLocationListDB() })
+    override suspend fun getWeatherList(): Flow<WillyWeatherResult<List<WeatherEntity>>> =
+            safeApiCall(call = { getWeatherListDB(dateUtils.getCalendar().time) })
 
-    private suspend fun getLocationDB(id: Int): Flow<WillyWeatherResult<LocationEntity>> {
-        return flowOf(Success(locationDao.getLocationDetail(id)))
+    private fun getWeatherItemDB(date: Date): Flow<WillyWeatherResult<WeatherEntity>> {
+        return flowOf(Success(weatherDao.getWeatherItem(date)))
     }
 
-    override suspend fun getLocation(id: Int): Flow<WillyWeatherResult<LocationEntity>> =
-        safeApiCall(call = { getLocationDB(id) })
+    override suspend fun getWeatherItem(date: Date): Flow<WillyWeatherResult<WeatherEntity>> =
+            safeApiCall(call = { getWeatherItemDB(date) })
 
-    private suspend fun deleteLocationDB(locationEntity: LocationEntity): Flow<WillyWeatherResult<Int>> {
-        val longList = locationDao.deleteLocation(locationEntity)
+    private suspend fun deleteWeatherDB(weatherEntity: WeatherEntity): Flow<WillyWeatherResult<Int>> {
+        val longList = weatherDao.deleteWeather(weatherEntity)
         return flowOf(Success(longList))
     }
 
-    override suspend fun deleteLocation(locationEntity: LocationEntity): Flow<WillyWeatherResult<Int>> =
-        safeApiCall(call = { deleteLocationDB(locationEntity) })
+    override suspend fun deleteWeather(weatherEntity: WeatherEntity): Flow<WillyWeatherResult<Int>> =
+            safeApiCall(call = { deleteWeatherDB(weatherEntity) })
 
-    private suspend fun deleteAllLocationDB(): Flow<WillyWeatherResult<Int>> {
-        val longList = locationDao.clearTable()
+    private suspend fun clearTableDB(): Flow<WillyWeatherResult<Int>> {
+        val longList = weatherDao.clearTable()
         return flowOf(Success(longList))
     }
 
     override suspend fun clearTable(): Flow<WillyWeatherResult<Int>> =
-        safeApiCall(call = { deleteAllLocationDB() })
+            safeApiCall(call = { clearTableDB() })
 }

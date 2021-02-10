@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import reprator.willyWeather.base.util.isNull
 import reprator.willyWeather.city.CityDetailViewModal
@@ -24,6 +25,8 @@ class CityDetailFragment : Fragment(R.layout.fragment_city_detail) {
         super.onDestroyView()
     }
 
+    val args: CityDetailFragmentArgs by navArgs()
+
     @Inject
     lateinit var cityDetailNavigator: CityDetailNavigator
 
@@ -42,6 +45,9 @@ class CityDetailFragment : Fragment(R.layout.fragment_city_detail) {
     }
 
     private fun setToolBar() {
+
+        binding.cityDetailToolBar.title = args.locationName
+
         binding.cityDetailToolBar.setOnClickListener {
             cityDetailNavigator.navigateToBack(findNavController())
         }

@@ -11,6 +11,7 @@ import reprator.willyWeather.cityList.data.datasource.ForecastWeatherLocalDataSo
 import reprator.willyWeather.cityList.datasource.local.mapper.GetWeatherListMapper
 import reprator.willyWeather.cityList.modals.LocationModal
 import reprator.willyWeather.database.DBManager
+import timber.log.Timber
 import javax.inject.Inject
 
 class ForeCastWeatherLocalDataSourceImpl @Inject constructor(
@@ -21,7 +22,7 @@ class ForeCastWeatherLocalDataSourceImpl @Inject constructor(
     private suspend fun getLocationListDb():
             Flow<WillyWeatherResult<List<LocationModal>>> {
 
-        return when (val data = dbManager.getLocationList().single()) {
+        return when (val data = dbManager.getWeatherList().single()) {
             is Success -> {
                 val mappedData = data.get().map {
                     getWeatherListMapper.mapTo(it)
@@ -45,7 +46,7 @@ class ForeCastWeatherLocalDataSourceImpl @Inject constructor(
         val modifiedList = locationalList.map {
             getWeatherListMapper.mapIn(it)
         }
-
-        return dbManager.saveLocationList(modifiedList)
+        Timber.e("savedate ${modifiedList}")
+        return dbManager.saveWeatherList(modifiedList)
     }
 }

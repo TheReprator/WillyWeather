@@ -39,4 +39,7 @@ dependencies {
 
     // Architecture components testing
     api(Libs.TestDependencies.core)
+    api(Libs.Coroutines.coroutineTest) {
+        exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-debug")
+    }
 }
