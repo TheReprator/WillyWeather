@@ -11,7 +11,7 @@ import reprator.willyWeather.database.DBManager
 import java.util.*
 import javax.inject.Inject
 
-class ForecastWeatherUseCase @Inject constructor(
+class GetWeatherDetailUseCase @Inject constructor(
     private val dbManager: DBManager,
     private val getWeatherDetailMapper: GetWeatherDetailMapper
 ) {

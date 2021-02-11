@@ -1,9 +1,7 @@
 package reprator.willyWeather.city
 
 import androidx.lifecycle.*
-import dagger.assisted.Assisted
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.FragmentScoped
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.catch
@@ -15,7 +13,7 @@ import reprator.willyWeather.base.useCases.ErrorResult
 import reprator.willyWeather.base.useCases.Success
 import reprator.willyWeather.base.util.AppCoroutineDispatchers
 import reprator.willyWeather.city.modals.LocationModal
-import reprator.willyWeather.city.usecase.ForecastWeatherUseCase
+import reprator.willyWeather.city.usecase.GetWeatherDetailUseCase
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,7 +21,7 @@ import javax.inject.Inject
 class CityDetailViewModal @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val coroutineDispatcherProvider: AppCoroutineDispatchers,
-    private val forecastWeatherUseCase: ForecastWeatherUseCase,
+    private val getWeatherDetailUseCase: GetWeatherDetailUseCase,
 ) : ViewModel() {
 
     companion object {
@@ -35,7 +33,7 @@ class CityDetailViewModal @Inject constructor(
 
     fun getTodayWeatherUseCase() {
         computationalBlock {
-            forecastWeatherUseCase(savedStateHandle.get<Long>(LOCATION_ID)!!)
+            getWeatherDetailUseCase(savedStateHandle.get<Long>(LOCATION_ID)!!)
                 .flowOn(coroutineDispatcherProvider.io).catch { e ->
                     Timber.e("error is ${e.localizedMessage}")
                 }.flowOn(coroutineDispatcherProvider.main)
