@@ -31,7 +31,6 @@ class ForeCastWeatherRemoteDataSourceImpl @Inject constructor(
             is ErrorResult -> {
                 flowOf(ErrorResult(message = data.message, throwable = data.throwable))
             }
-            else -> throw IllegalArgumentException()
         }
     }
 
