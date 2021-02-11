@@ -69,114 +69,33 @@ object TestFakeData {
     }
 
     fun getFakeDBEntityDataList(): List<WeatherEntity> {
-        val timezoneUK = getUKTimeZone()
+        val timeZoneUk = getUKTimeZone()
+        val epoch = getUKEpochTimeZone()
 
         return listOf(
             WeatherEntity(
-                "London",
-                yesterday,
-                dateUtils.convertToEpoch(0),
-
-                dateUtils.format(
-                    dateUtils.convertToEpoch(yesterdayRaw),
-                    DateUtils.HOUR_MINUTE,
-                    timezoneUK
-                ),
-                dateUtils.format(
-                    dateUtils.convertToEpoch(yesterdayRaw),
-                    DateUtils.HOUR_MINUTE,
-                    timezoneUK
-                ),
-
-                "10",
-                "23",
-                "89.01",
-                "32.90",
-                "Foggy",
-                "110.11",
-                "98.11",
-                "11.91",
-                "118.00"
+                "London, UK", yesterday, epoch, "10:32 AM", "10:32 AM", "-1.8",
+                "0.56", "23.0", "89.01", "Light Snow", "5.24",
+                "78.0", "0.85", "91.0"
             ),
+
             WeatherEntity(
-                "London",
-                dateToday,
-                dateUtils.convertToEpoch(0),
-
-                dateUtils.format(
-                    dateUtils.convertToEpoch(dateTodayRaw),
-                    DateUtils.HOUR_MINUTE,
-                    timezoneUK
-                ),
-                dateUtils.format(
-                    dateUtils.convertToEpoch(dateTodayRaw),
-                    DateUtils.HOUR_MINUTE,
-                    timezoneUK
-                ),
-
-
-                "10",
-                "23",
-                "89.01",
-                "32.90",
-                "Foggy",
-                "110.11",
-                "98.11",
-                "11.91",
-                "118.00"
+                "London, UK", dateToday, epoch, "12:00 PM", "12:00 PM", "-1.8",
+                "0.56", "23.0", "89.01", "Light Snow", "5.24",
+                "78.0", "0.85", "91.0"
             ),
+
             WeatherEntity(
-                "London",
-                dateNextDay,
-                dateUtils.convertToEpoch(0),
-
-                dateUtils.format(
-                    dateUtils.convertToEpoch(dateNextDayRaw),
-                    DateUtils.HOUR_MINUTE,
-                    timezoneUK
-                ),
-                dateUtils.format(
-                    dateUtils.convertToEpoch(dateNextDayRaw),
-                    DateUtils.HOUR_MINUTE,
-                    timezoneUK
-                ),
-
-                "10",
-                "23",
-                "89.01",
-                "32.90",
-                "Foggy",
-                "110.11",
-                "98.11",
-                "11.91",
-                "118.00"
+                "London, UK", dateNextDay, epoch, "12:00 PM", "12:00 PM","-1.8",
+                "0.56", "23.0", "89.01",  "Light Snow", "5.24",
+                "78.0", "0.85", "91.0"
             ),
+
             WeatherEntity(
-                "London",
-                dateDayAfterTomorrow,
-                dateUtils.convertToEpoch(0),
-
-                dateUtils.format(
-                    dateUtils.convertToEpoch(dateDayAfterTomorrowRaw),
-                    DateUtils.HOUR_MINUTE,
-                    timezoneUK
-                ),
-                dateUtils.format(
-                    dateUtils.convertToEpoch(dateDayAfterTomorrowRaw),
-                    DateUtils.HOUR_MINUTE,
-                    timezoneUK
-                ),
-
-                "10",
-                "23",
-                "89.01",
-                "32.90",
-                "Foggy",
-                "110.11",
-                "98.11",
-                "11.91",
-                "118.00"
-            )
+                "London, UK", dateDayAfterTomorrow, epoch, "12:00 PM", "12:00 PM","-1.8",
+                "0.56", "23.0", "89.01", "Light Snow", "5.24",
+                "78.0", "0.85", "91.0"
+            ),
         )
     }
 
