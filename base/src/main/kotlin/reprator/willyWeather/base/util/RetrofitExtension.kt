@@ -17,9 +17,9 @@ fun <T> Response<T>.bodyOrThrow(): T {
 fun <T> Response<T>.toException() = HttpException(this)
 
 suspend inline fun <T> Call<T>.executeWithRetry(
-    defaultDelay: Long = 100,
-    maxAttempts: Int = 3,
-    shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
+        defaultDelay: Long = 100,
+        maxAttempts: Int = 3,
+        shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
 ): Response<T> {
     repeat(maxAttempts) { attempt ->
         var nextDelay = attempt * attempt * defaultDelay
@@ -57,9 +57,9 @@ suspend inline fun <T> Call<T>.executeWithRetry(
 }
 
 suspend inline fun <T> Call<T>.fetchBodyWithRetry(
-    firstDelay: Long = 100,
-    maxAttempts: Int = 3,
-    shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
+        firstDelay: Long = 100,
+        maxAttempts: Int = 3,
+        shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
 ) = executeWithRetry(firstDelay, maxAttempts, shouldRetry).bodyOrThrow()
 
 fun defaultShouldRetry(exception: Exception) = when (exception) {
@@ -89,17 +89,6 @@ fun <T> Response<T>.toResultUnit(): WillyWeatherResult<Unit> = try {
 fun <T> Response<T>.toResult(): WillyWeatherResult<T> = try {
     if (isSuccessful) {
         Success(data = bodyOrThrow(), responseModified = isFromNetwork())
-    } else {
-        ErrorResult(toException())
-    }
-} catch (e: Exception) {
-    ErrorResult(e)
-}
-
-@Suppress("REDUNDANT_INLINE_SUSPEND_FUNCTION_TYPE")
-suspend fun <T, E> Response<T>.toResult(mapper: suspend (T) -> E): WillyWeatherResult<E> = try {
-    if (isSuccessful) {
-        Success(data = mapper(bodyOrThrow()), responseModified = isFromNetwork())
     } else {
         ErrorResult(toException())
     }
