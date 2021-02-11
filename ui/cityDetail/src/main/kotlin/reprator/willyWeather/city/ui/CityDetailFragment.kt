@@ -41,7 +41,7 @@ class CityDetailFragment : Fragment(R.layout.fragment_city_detail) {
         setObserver()
 
         if (savedInstanceState.isNull())
-            viewModel.getTodayWeatherUseCase()
+            viewModel.getWeatherDetailUseCase()
     }
 
     private fun setToolBar() {

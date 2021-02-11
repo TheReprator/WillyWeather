@@ -56,6 +56,7 @@ class CityListViewModal @Inject constructor(
                                 is ErrorResult -> {
                                     _errorMsgForeCast.value = it.message!!
                                 }
+                                else -> throw IllegalStateException()
                             }
                         }
                     }
@@ -82,9 +83,5 @@ class CityListViewModal @Inject constructor(
                 coroutineExceptionHandler,
                 block
         )
-    }
-
-    private fun mainBlock(block: suspend CoroutineScope.() -> Unit) {
-        viewModelScope.mainBlock(coroutineDispatcherProvider, block)
     }
 }

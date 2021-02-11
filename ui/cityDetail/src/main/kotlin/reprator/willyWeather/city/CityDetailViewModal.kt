@@ -28,10 +28,10 @@ class CityDetailViewModal @Inject constructor(
         private const val LOCATION_ID = "id"
     }
 
-    private val _foreCastWeatherList = MutableLiveData<LocationModal>()
-    val foreCastWeatherList: LiveData<LocationModal> = _foreCastWeatherList
+    private val _forecastWeatherItem = MutableLiveData<LocationModal>()
+    val foreCastWeatherList: LiveData<LocationModal> = _forecastWeatherItem
 
-    fun getTodayWeatherUseCase() {
+    fun getWeatherDetailUseCase() {
         computationalBlock {
             getWeatherDetailUseCase(savedStateHandle.get<Long>(LOCATION_ID)!!)
                 .flowOn(coroutineDispatcherProvider.io).catch { e ->
@@ -41,11 +41,12 @@ class CityDetailViewModal @Inject constructor(
                     withContext(coroutineDispatcherProvider.main) {
                         when (it) {
                             is Success -> {
-                                _foreCastWeatherList.value = it.get()
+                                _forecastWeatherItem.value = it.get()
                             }
                             is ErrorResult -> {
                                 Timber.e("error is ${it.message}")
                             }
+                            else -> throw IllegalStateException()
                         }
                     }
                 }
