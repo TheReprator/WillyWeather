@@ -16,13 +16,14 @@ class ForecastWeatherUseCase @Inject constructor(
     private val getWeatherDetailMapper: GetWeatherDetailMapper
 ) {
     suspend operator fun invoke(id: Long): Flow<WillyWeatherResult<LocationModal>> {
-        return when (val data = dbManager.getWeatherItem(Date(id)).single()) {
+        return when (val data = dbManager.getWeatherItem(Date(id))) {
             is Success -> {
                 flowOf(Success(getWeatherDetailMapper.map(data.data)))
             }
             is ErrorResult -> {
                 flowOf(ErrorResult(message = data.message, throwable = data.throwable))
             }
+            else -> throw IllegalStateException()
         }
     }
 }

@@ -7,9 +7,6 @@ import io.mockk.coEvery
 import io.mockk.coVerifySequence
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
@@ -52,8 +49,8 @@ class ForeCastWeatherRemoteDataSourceImplTest {
         MockKAnnotations.init(this, true)
 
         foreCastWeatherRemoteDataSource = ForeCastWeatherRemoteDataSourceImpl(
-                weatherApiService,
-                forecastWeatherMapper
+            weatherApiService,
+            forecastWeatherMapper
         )
     }
 
@@ -70,7 +67,7 @@ class ForeCastWeatherRemoteDataSourceImplTest {
             forecastWeatherMapper.map(any())
         } returns getFakeLocationModalDataList()
 
-        val result = foreCastWeatherRemoteDataSource.getForecastWeather(input).single()
+        val result = foreCastWeatherRemoteDataSource.getForecastWeather(input)
 
         Truth.assertThat(result).isInstanceOf(Success::class.java)
         Truth.assertThat(result.get()!!).hasSize(4)
@@ -86,16 +83,16 @@ class ForeCastWeatherRemoteDataSourceImplTest {
     fun `fetch list failed from server`() = coroutinesTestRule.runBlockingTest {
 
         val input = LocationRequestModal("London")
-        val output = "Invalid data received"
+        val output = "No Address Associated"
+
         coEvery {
             weatherApiService.foreCastWeather(any(), any(), any(), any())
-        } throws UnknownHostException(output)
+        }.throws(UnknownHostException(output))
 
-        foreCastWeatherRemoteDataSource.getForecastWeather(input)
-                .catch { error ->
-                    Truth.assertThat(error.message).isEqualTo(output)
-                    Truth.assertThat(error).isInstanceOf(UnknownHostException::class.java)
-                }.collect()
+        val result = foreCastWeatherRemoteDataSource.getForecastWeather(input)
+
+        Truth.assertThat(result).isInstanceOf(ErrorResult::class.java)
+        Truth.assertThat((result as ErrorResult).message).isEqualTo(output)
     }
 
     @Test
@@ -107,7 +104,8 @@ class ForeCastWeatherRemoteDataSourceImplTest {
             weatherApiService.foreCastWeather(any(), any(), any(), any())
         } returns Response.error(404, mockk(relaxed = true))
 
-        val resp = foreCastWeatherRemoteDataSource.getForecastWeather(input).single()
+        val resp = foreCastWeatherRemoteDataSource.getForecastWeather(input)
+
         Truth.assertThat(resp).isInstanceOf(ErrorResult::class.java)
         Truth.assertThat((resp as ErrorResult).throwable).isInstanceOf(HttpException::class.java)
     }

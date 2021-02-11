@@ -14,8 +14,8 @@ import java.util.*
 
 @RunWith(JUnit4::class)
 class DateUtilsImplTest {
-    val input = 1613286979L
-    val output ="14-Feb-2021 07:16:19 AM"
+    private val input = 1613286979L
+    private val output ="14-Feb-2021 07:16:19 AM"
 
     private lateinit var dateUtil: DateUtils
 

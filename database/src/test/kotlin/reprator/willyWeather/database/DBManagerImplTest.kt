@@ -5,7 +5,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
@@ -48,7 +47,7 @@ class DBManagerImplTest {
             weatherDao.getWeatherList()
         } returns input
 
-        val outputResult = dbManager.getWeatherList().single()
+        val outputResult = dbManager.getWeatherList()
 
         Truth.assertThat(outputResult).isInstanceOf(Success::class.java)
         Truth.assertThat(outputResult.get()).hasSize(0)
@@ -62,7 +61,7 @@ class DBManagerImplTest {
             weatherDao.insertWeather(input)
         } returns expectedOutput
 
-        val outputResult = dbManager.saveWeather(input).single()
+        val outputResult = dbManager.saveWeather(input)
 
         Truth.assertThat(outputResult.get()).isEqualTo(expectedOutput)
     }
@@ -75,7 +74,7 @@ class DBManagerImplTest {
             weatherDao.insertWeatherList(*input.toTypedArray())
         } returns expectedOutput
 
-        val outputResult = dbManager.saveWeatherList(input).single()
+        val outputResult = dbManager.saveWeatherList(input)
 
         Truth.assertThat(outputResult.get()).isEqualTo(expectedOutput)
     }
@@ -87,7 +86,7 @@ class DBManagerImplTest {
             weatherDao.getWeatherList(any())
         } returns expectedOutput
 
-        val outputResult = dbManager.getWeatherList().single()
+        val outputResult = dbManager.getWeatherList()
 
         Truth.assertThat(outputResult.get()).isEqualTo(expectedOutput)
         Truth.assertThat(outputResult.get()).hasSize(4)
@@ -100,7 +99,7 @@ class DBManagerImplTest {
             weatherDao.getWeatherItem(dateToday)
         } returns expectedOutput
 
-        val outputResult = dbManager.getWeatherItem(dateToday).single()
+        val outputResult = dbManager.getWeatherItem(dateToday)
 
         Truth.assertThat(outputResult.get()).isEqualTo(expectedOutput)
     }
@@ -113,7 +112,7 @@ class DBManagerImplTest {
             weatherDao.deleteWeather(input)
         } returns expectedOutput
 
-        val outputResult = dbManager.deleteWeather(input).single()
+        val outputResult = dbManager.deleteWeather(input)
 
         Truth.assertThat(outputResult.get()).isEqualTo(expectedOutput)
     }
@@ -125,7 +124,7 @@ class DBManagerImplTest {
             weatherDao.clearTable()
         } returns expectedOutput
 
-        val outputResult = dbManager.clearTable().single()
+        val outputResult = dbManager.clearTable()
 
         Truth.assertThat(outputResult.get()).isEqualTo(expectedOutput)
     }

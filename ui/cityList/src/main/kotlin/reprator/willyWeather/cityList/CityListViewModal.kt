@@ -35,17 +35,9 @@ class CityListViewModal @Inject constructor(
     @VisibleForTesting
     val _foreCastWeatherList = MutableLiveData(emptyList<LocationModal>())
 
-    private val errorHandler = CoroutineExceptionHandler { _, error ->
-        mainBlock {
-            error.printStackTrace()
-            _errorMsgForeCast.value = error.localizedMessage
-            _isLoadingForeCast.value = false
-        }
-    }
-
     fun getForeCastWeatherUse() {
 
-        computationalBlock(errorHandler) {
+        computationalBlock {
             forecastWeatherUseCase(createRequestModal()).flowOn(coroutineDispatcherProvider.io)
                     .catch { e ->
                         e.printStackTrace()

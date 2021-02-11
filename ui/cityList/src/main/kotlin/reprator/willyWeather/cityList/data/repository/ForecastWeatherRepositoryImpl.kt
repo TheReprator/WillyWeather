@@ -1,14 +1,11 @@
 package reprator.willyWeather.cityList.data.repository
 
 import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import reprator.willyWeather.base.useCases.ErrorResult
 import reprator.willyWeather.base.useCases.Success
 import reprator.willyWeather.base.useCases.WillyWeatherResult
-import reprator.willyWeather.base.util.AppCoroutineDispatchers
 import reprator.willyWeather.base.util.ConnectionDetector
 import reprator.willyWeather.cityList.data.datasource.ForecastWeatherLocalDataSource
 import reprator.willyWeather.cityList.data.datasource.ForecastWeatherRemoteDataSource
@@ -19,11 +16,9 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class ForecastWeatherRepositoryImpl @Inject constructor(
-        private val forecastWeatherRemoteDataSource: ForecastWeatherRemoteDataSource,
-        private val forecastWeatherLocalDataSource: ForecastWeatherLocalDataSource,
-        private val coroutineScope: CoroutineScope,
-        private val coroutineDispatchers: AppCoroutineDispatchers,
-        private val connectionDetector: ConnectionDetector,
+    private val forecastWeatherRemoteDataSource: ForecastWeatherRemoteDataSource,
+    private val forecastWeatherLocalDataSource: ForecastWeatherLocalDataSource,
+    private val connectionDetector: ConnectionDetector,
 ) : ForecastWeatherRepository {
 
     override suspend fun getForeCastWeatherRepository(requestModal: LocationRequestModal):
@@ -34,29 +29,26 @@ class ForecastWeatherRepositoryImpl @Inject constructor(
             getDataFromDb()
     }
 
-    private suspend fun saveAndFetchFromDb(requestModal: LocationRequestModal) =
-            suspendCancellableCoroutine<Flow<WillyWeatherResult<List<LocationModal>>>> { cont ->
-                coroutineScope.launch(coroutineDispatchers.io) {
-                    forecastWeatherRemoteDataSource.getForecastWeather(requestModal)
-                            .also { flowResult ->
-                                flowResult.catch { error ->
-                                    // error.printStackTrace()
-                                    // cont.resumeWithException(error)
-                                    cont.resume(getDataFromDb()) { error }
-                                }.collect {
-                                    if (it is Success && it.data.isNotEmpty()) {
-                                        forecastWeatherLocalDataSource.clearAllRecords()
-                                        forecastWeatherLocalDataSource.insertAllRecords(it.data)
+    private suspend fun saveAndFetchFromDb(requestModal: LocationRequestModal):
+            Flow<WillyWeatherResult<List<LocationModal>>> {
 
-                                        cont.resume(getDataFromDb()) {}
-                                    }
-                                }
-                            }
-                }
+        return when (val result =
+            forecastWeatherRemoteDataSource.getForecastWeather(requestModal)) {
+            is Success -> {
+                forecastWeatherLocalDataSource.clearAllRecords()
+                forecastWeatherLocalDataSource.insertAllRecords(result.data)
+
+                getDataFromDb()
             }
+            is ErrorResult -> {
+                getDataFromDb()
+            }
+            else -> throw IllegalStateException()
+        }
+    }
 
     private suspend fun getDataFromDb(): Flow<WillyWeatherResult<List<LocationModal>>> {
-        return when (val data = forecastWeatherLocalDataSource.getLocationList().single()) {
+        return when (val data = forecastWeatherLocalDataSource.getLocationList()) {
             is Success -> {
                 if (data.data.isNullOrEmpty())
                     flowOf(ErrorResult(message = "No internet connection."))

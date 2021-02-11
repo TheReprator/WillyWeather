@@ -29,7 +29,7 @@ class ForeCastWeatherApiTest {
     companion object {
         private const val LOCATION_NAME = "london"
         private const val UNIT = "standard"
-        private const val COUNT = 2
+        private const val COUNT = 7
     }
 
     @Rule
@@ -64,7 +64,7 @@ class ForeCastWeatherApiTest {
     }
 
     @Test
-    fun `get weather forecast for next 2 days`() = runBlocking {
+    fun `get weather forecast for next 7 days`() = runBlocking {
         javaClass.enqueueResponse(mockWebServer, "forecast.json")
         val foreCastEntity = service.foreCastWeather(LOCATION_NAME, UNIT, cnt = COUNT).body()
         val request = mockWebServer.takeRequest()
@@ -72,16 +72,17 @@ class ForeCastWeatherApiTest {
         Truth.assertThat(foreCastEntity).isNotNull()
 
         val foreCastList = foreCastEntity!!.list
-        Truth.assertThat(foreCastList.size).isEqualTo(2)
+        Truth.assertThat(foreCastList.size).isEqualTo(COUNT)
 
-        Truth.assertThat(request.requestUrl!!.pathSegments.size).isEqualTo(1)
+        Truth.assertThat(request.requestUrl!!.pathSegments.size).isEqualTo(2)
         Truth.assertThat(request.requestUrl!!.pathSegments[0]).isEqualTo("forecast")
+        Truth.assertThat(request.requestUrl!!.pathSegments[1]).isEqualTo("daily")
 
         val queryParams = request.requestUrl!!.queryParameterNames
-        Truth.assertThat(queryParams).hasSize(5)
-        Truth.assertThat(queryParams).contains("lat")
+        Truth.assertThat(queryParams).hasSize(4)
+        Truth.assertThat(queryParams).contains("q")
 
-        val requestParams = setOf("lat", "lon", "units", "appid", "cnt")
+        val requestParams = setOf("q", "units", "appid", "cnt")
         Truth.assertThat(queryParams).isEqualTo(requestParams)
 
         Truth.assertThat(request.path)

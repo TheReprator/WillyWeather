@@ -1,7 +1,5 @@
 package reprator.willyWeather.cityList.datasource.remote
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import reprator.willyWeather.base.useCases.ErrorResult
 import reprator.willyWeather.base.useCases.Success
 import reprator.willyWeather.base.useCases.WillyWeatherResult
@@ -14,27 +12,28 @@ import reprator.willyWeather.cityList.modals.LocationRequestModal
 import javax.inject.Inject
 
 class ForeCastWeatherRemoteDataSourceImpl @Inject constructor(
-        private val weatherApiService: WeatherApiService,
-        private val forecastWeatherMapper: ForecastWeatherMapper
+    private val weatherApiService: WeatherApiService,
+    private val forecastWeatherMapper: ForecastWeatherMapper
 ) : ForecastWeatherRemoteDataSource {
 
-    private suspend fun getForecastWeatherApi(requestModal: LocationRequestModal): Flow<WillyWeatherResult<List<LocationModal>>> {
+    private suspend fun getForecastWeatherApi(requestModal: LocationRequestModal): WillyWeatherResult<List<LocationModal>> {
         val data = weatherApiService.foreCastWeather(
-                requestModal.location,
-                requestModal.unit, cnt = requestModal.count
+            requestModal.location,
+            requestModal.unit, cnt = requestModal.count
         ).toResult()
 
         return when (data) {
             is Success -> {
-                flowOf(Success(forecastWeatherMapper.map(data.data)))
+                Success(forecastWeatherMapper.map(data.data))
             }
             is ErrorResult -> {
-                flowOf(ErrorResult(message = data.message, throwable = data.throwable))
+                ErrorResult(message = data.message, throwable = data.throwable)
             }
+            else -> throw IllegalStateException()
         }
     }
 
 
-    override suspend fun getForecastWeather(requestModal: LocationRequestModal): Flow<WillyWeatherResult<List<LocationModal>>> =
-            safeApiCall(call = { getForecastWeatherApi(requestModal) })
+    override suspend fun getForecastWeather(requestModal: LocationRequestModal): WillyWeatherResult<List<LocationModal>> =
+        safeApiCall(call = { getForecastWeatherApi(requestModal) })
 }

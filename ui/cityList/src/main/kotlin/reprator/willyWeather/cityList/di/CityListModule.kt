@@ -47,15 +47,11 @@ class CityListModule {
     fun provideForecastWeatherRepository(
         forecastWeatherRemoteDataSource: ForecastWeatherRemoteDataSource,
         forecastWeatherLocalDataSource: ForecastWeatherLocalDataSource,
-        coroutineScope: CoroutineScope,
-        coroutineDispatchers: AppCoroutineDispatchers,
         connectionDetector: ConnectionDetector
     ): ForecastWeatherRepository {
         return ForecastWeatherRepositoryImpl(
             forecastWeatherRemoteDataSource,
             forecastWeatherLocalDataSource,
-            coroutineScope,
-            coroutineDispatchers,
             connectionDetector
         )
     }
